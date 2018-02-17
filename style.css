@@ -1,0 +1,34 @@
+#scxmlContent {
+    width : 100%;
+    height : 50%;
+}
+
+div.CodeMirror {
+    width : 100%;
+    height : 50%;
+}
+
+.CodeMirror-scrollbar,.CodeMirror-scroll {
+    height : 100%;
+}
+
+
+#scxmlTrace {
+    border : black solid 1px;
+    width : 100%;
+    height : 50%;
+    overflow-y : auto;
+}
+
+
+div#left {
+    float:left;
+    
+    width:50%;
+}
+
+div#right {
+    float:right;
+    
+    width:50%;
+}

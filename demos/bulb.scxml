@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml"
+       version="1.0" initial="off">
+    <state id="off">
+        <transition event="on" target="on">
+            <script>toggleBulb()</script>
+        </transition>
+    </state>
+    <state id="on">
+        <transition event="off" target="off">
+            <script>toggleBulb()</script>
+        </transition>
+    </state>
+</scxml>

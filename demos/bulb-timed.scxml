@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml"
+       version="1.0" initial="off">
+    <state id="off">
+        <onentry>
+            <send event="tick" delay="1s"/>
+        </onentry>
+        <transition event="tick" target="on">
+            <script>toggleBulb()</script>
+        </transition>
+    </state>
+    <state id="on">
+        <onentry>
+            <send event="tick" delay="1s"/>
+        </onentry>
+        <transition event="tick" target="off">
+            <script>toggleBulb()</script>
+        </transition>
+    </state>
+</scxml>

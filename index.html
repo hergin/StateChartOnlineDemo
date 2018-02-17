@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>SCION Simulation Environment</title>
+        <!--
+        <script src="jquery.js"></script>
+        <script src="scion.js"></script>
+        -->
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js"></script>
+        <script type="text/javascript" src="http://jbeard4.github.com/SCION/builds/latest/scion.js"></script>
+
+        <script src="lib/CodeMirror/lib/codemirror.js"></script>
+        <script src="lib/CodeMirror/mode/xml/xml.js"></script>
+        <script src="lib/CodeMirror/keymap/vim.js"></script>
+
+        <link rel="stylesheet" href="lib/CodeMirror/lib/codemirror.css"></link>
+
+        <script src="env.js"></script>
+
+        <script>
+        // PUBLIC APIs
+        function toggleBulb() {
+            var image = document.getElementById('bulbImage');
+            if (image.src.match("bulbon")) {
+                image.src = "pics/pic_bulboff.png";
+            } else {
+                image.src = "pics/pic_bulbon.png";
+            }
+        }
+
+        function green() {
+            document.getElementById("trafficLightsImage").src = "pics/green.png";
+        }
+        function red() {
+            document.getElementById("trafficLightsImage").src = "pics/red.png";
+        }
+        function yellow() {
+            document.getElementById("trafficLightsImage").src = "pics/yellow.png";
+        }
+        function green_soon() {
+            document.getElementById("trafficLightsImage").src = "pics/greensoon.png";
+        }
+        function all_off() {
+            document.getElementById("trafficLightsImage").src = "pics/all_off.png";
+        }
+        </script>
+
+        <link rel="stylesheet" href="style.css"></link>
+    </head>
+    <body>
+        <div id="left">
+            <textarea id="scxmlContent"></textarea>
+            <form id="scxmlLoadInitControls">
+                <input size="30" type="text" id="loadScxmlFromField"/>
+                <input size="30" type="submit" id="loadScxmlSubmit" value="LoadFromURL"/>
+                <br/><br/>
+                <input size="30" type="file" id="loadFromFile"/>
+                <input size="30" type="submit" id="loadFromFileButton" value="LoadFromFile"/>
+                <br/><br/>
+                <input size="60" type="button" id="initScxmlButton" value="Init"/>
+            </form>
+        </div>
+        <div id="right">
+            <div id="scxmlTrace"></div>
+            <form id="scxmlSimulationControls">
+                <input type="text" id="eventNameField"/>
+                <input type="submit" id="genEventSubmit" value="Gen"/>
+                <input type="checkbox" id="logOnentry"/>
+                <label for="logOnentry">Log State Entry</label>
+                <input type="checkbox" id="logOnexit"/>
+                <label for="logOnexit">Log State Exit</label>
+            </form>
+        </div>
+        <br/>
+        <div id="bottom">
+            <h3>Light Bulb example</h3>
+            <img id="bulbImage" src="pics/pic_bulboff.png" width="100"/>
+        </div>
+        <br/>
+        <div id="trafficLights">
+            <h3>Traffic Lights example</h3>
+            <img id="trafficLightsImage" src="pics/all_off.png" width="80"/>
+        </div>
+    </body>
+</html>
