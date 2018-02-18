@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     var scxmlContent = $('#scxmlContent'),
         scxmlLoadInitControls = $('#scxmlLoadInitControls'),
-        loadFromFileButton = $('#loadFromFileButton'),
+        loadFromFile = $('#loadFromFile'),
         loadScxmlFromField = $('#loadScxmlFromField'),
         initScxmlButton = $('#initScxmlButton'),
         scxmlTrace = $('#scxmlTrace'),
@@ -88,17 +88,16 @@ $(document).ready(function(){
         },"text");
     });
 
-    loadFromFileButton.click(function() {
-        var x = document.getElementById("loadFromFile");
+    loadFromFile.change(function(event) {
+        var input = event.target;
 
         var reader = new FileReader();
 
-        reader.onload = function(event){
-            var file = event.target;
-            codeMirror.setValue(file.result);
+        reader.onload = function(){
+            codeMirror.setValue(reader.result);
         };
 
-        reader.readAsText(x.files[0]);
+        reader.readAsText(input.files[0]);
 
     });
 
