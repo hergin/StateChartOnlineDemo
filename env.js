@@ -75,7 +75,7 @@ $(document).ready(function(){
         p.setAttribute('style','display:none');
         $(p).text(txt);
         scxmlTrace.append(p);
-        $(p).fadeIn();
+        $(p).show();
         scxmlTrace.scrollTop(scxmlTrace.scrollTop()+1000);
     }
 

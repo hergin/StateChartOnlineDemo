@@ -6,7 +6,6 @@
         <script src="scion.js"></script>
         -->
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js"></script>
         <script type="text/javascript" src="http://jbeard4.github.com/SCION/builds/latest/scion.js"></script>
 
@@ -16,6 +15,10 @@
 
         <link rel="stylesheet" href="lib/CodeMirror/lib/codemirror.css"></link>
 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="env.js"></script>
 
         <script>
@@ -44,43 +47,89 @@
         function all_off() {
             document.getElementById("trafficLightsImage").src = "pics/all_off.png";
         }
+
+        function loadExternalXML(xmlFile) {
+            $('#loadScxmlFromField').val(xmlFile);
+            $('#loadScxmlSubmit').click();
+        }
         </script>
 
         <link rel="stylesheet" href="style.css"></link>
     </head>
     <body>
-        <div id="left">
-            <textarea id="scxmlContent"></textarea>
-            <form id="scxmlLoadInitControls">
-                <input size="30" type="text" id="loadScxmlFromField"/>
-                <input size="30" type="submit" id="loadScxmlSubmit" value="LoadFromURL"/>
-                <br/><br/>
-                <input size="30" type="file" id="loadFromFile"/>
-                <input size="30" type="submit" id="loadFromFileButton" value="LoadFromFile"/>
-                <br/><br/>
-                <input size="60" type="button" id="initScxmlButton" value="Init"/>
-            </form>
-        </div>
-        <div id="right">
-            <div id="scxmlTrace"></div>
-            <form id="scxmlSimulationControls">
-                <input type="text" id="eventNameField"/>
-                <input type="submit" id="genEventSubmit" value="Gen"/>
-                <input type="checkbox" id="logOnentry"/>
-                <label for="logOnentry">Log State Entry</label>
-                <input type="checkbox" id="logOnexit"/>
-                <label for="logOnexit">Log State Exit</label>
-            </form>
-        </div>
-        <br/>
-        <div id="bottom">
-            <h3>Light Bulb example</h3>
-            <img id="bulbImage" src="pics/pic_bulboff.png" width="100"/>
-        </div>
-        <br/>
-        <div id="trafficLights">
-            <h3>Traffic Lights example</h3>
-            <img id="trafficLightsImage" src="pics/all_off.png" width="80"/>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col">
+                            <textarea id="scxmlContent"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <form id="scxmlLoadInitControls">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <input type="text" id="loadScxmlFromField"/>
+                                        <input type="submit" id="loadScxmlSubmit" value="LoadFromURL"/>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        OR
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="file" id="loadFromFile"/>
+                                        <input type="submit" id="loadFromFileButton" value="LoadFromFile"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <input style="width:100%" type="button" id="initScxmlButton" value="Initiate Statechart"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col">
+                            <div id="scxmlTrace"></div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm">
+                            <form id="scxmlSimulationControls">
+                                <input type="text" id="eventNameField"/>
+                                <input type="submit" id="genEventSubmit" value="Trigger"/>
+                                <input type="checkbox" id="logOnentry"/>
+                                <label for="logOnentry">Log State Entry</label>
+                                <input type="checkbox" id="logOnexit"/>
+                                <label for="logOnexit">Log State Exit</label>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col text-center">
+                    <h1>SAMPLES</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <h3>Light Bulb example</h3>
+                    <h5><a href="#" onclick="loadExternalXML('https://raw.githubusercontent.com/hergin/StateChartOnlineDemo/master/demos/bulb-timed.scxml')">load file</a></h5>
+                    <img id="bulbImage" src="pics/pic_bulboff.png" width="100"/>
+                </div>
+                <div class="col text-center">
+                    <h3>Traffic Lights example</h3>
+                    <h5><a href="#" onclick="loadExternalXML('https://raw.githubusercontent.com/hergin/StateChartOnlineDemo/master/demos/traffic-lights-timed-with-history.scxml')">load file</a></h5>
+                    <img id="trafficLightsImage" src="pics/all_off.png" width="80"/>
+                </div>
+            </div>
         </div>
     </body>
 </html>
