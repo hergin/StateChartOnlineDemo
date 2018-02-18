@@ -22,6 +22,9 @@
         <script src="env.js"></script>
 
         <script>
+        // GLOBAL STATECHART
+        var scxmlInstance;
+
         // PUBLIC APIs
         function toggleBulb() {
             var image = document.getElementById('bulbImage');
@@ -51,6 +54,14 @@
         function loadExternalXML(xmlFile) {
             $('#loadScxmlFromField').val(xmlFile);
             $('#loadScxmlSubmit').click();
+        }
+
+        function trace(txt){
+            var p = document.createElement('p');
+            p.setAttribute('style','display:none');
+            $(p).text(txt);
+            scxmlTrace.append(p);
+            $(p).show();
         }
         </script>
 
@@ -97,7 +108,6 @@
                             <div id="scxmlTrace"></div>
                         </div>
                     </div>
-                    <br/>
                     <div class="row">
                         <div class="col-sm">
                             <form id="scxmlSimulationControls">
@@ -108,6 +118,11 @@
                                 <input type="checkbox" id="logOnexit"/>
                                 <label for="logOnexit">Log State Exit</label>
                             </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            Available transitions: <span id="availableTransitions"></span>
                         </div>
                     </div>
                 </div>

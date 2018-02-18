@@ -68,17 +68,6 @@ $(document).ready(function(){
 '    </state>\n'+
 '   </scxml>');
 
-    var scxmlInstance;
-
-    function trace(txt){
-        var p = document.createElement('p');
-        p.setAttribute('style','display:none');
-        $(p).text(txt);
-        scxmlTrace.append(p);
-        $(p).show();
-        scxmlTrace.scrollTop(scxmlTrace.scrollTop()+1000);
-    }
-
     var listener = {
         onEntry : function(stateId){
             if(logOnentryCheckbox.checked) trace('entering ' + stateId);
@@ -132,6 +121,14 @@ $(document).ready(function(){
             var conf = scxmlInstance.start();
             
             trace('started new scxml instance >> ' + JSON.stringify(conf));
+
+            $('#availableTransitions').html("");
+            var availableTransitions="";
+            $.each(scxmlInstance.model.events,function(item){
+                availableTransitions+="<a href='#' onclick='trace(\"triggered event: ["+item+"] resulting state: [\"+scxmlInstance.gen(\""+item+"\")+\"]\")'>"+item+"</a> ";
+            });
+
+            $('#availableTransitions').html(availableTransitions);
         });
     });
 

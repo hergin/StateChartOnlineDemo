@@ -1,0 +1,70 @@
+<scxml initial="start" version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=780 h=1080  -->
+ <state id="start"><!--   node-size-and-position x=192.99 y=43 w=75 h=75  -->
+  <onentry>
+   <send delay="1s" event="tick"></send>
+   <script>all_off()</script>
+  </onentry>
+  <transition event="tick" target="new_node26"><!--   edge-path [new_node26]  pointx=0 pointy=0 offsetx=0 offsety=-4  --></transition>
+ </state>
+ <parallel id="new_node26"><!--   node-size-and-position x=63.11 y=168 w=334.75 h=576  -->
+  <history id="H*" type="deep"><!--   node-size-and-position x=217 y=472 w=75 h=75  --></history>
+  <state id="lights" initial="red"><!--   node-size-and-position x=17.25 y=42 w=160.5 h=513  -->
+   <transition event="pause" target="turn_off"></transition>
+   <transition event="signal" target="flash"><!--   edge-path [flash]  pointx=0 pointy=0 offsetx=0 offsety=25  --></transition>
+   <state id="green"><!--   node-size-and-position x=20 y=293 w=75 h=75  -->
+    <onentry>
+     <send delay="5s" event="tick"></send>
+     <script>green()</script>
+    </onentry>
+    <transition event="tick" target="yellow"></transition>
+   </state>
+   <state id="yellow"><!--   node-size-and-position x=54 y=418 w=75 h=75  -->
+    <onentry>
+     <send delay="1s" event="tick"></send>
+     <script>yellow()</script>
+    </onentry>
+    <transition event="tick" target="red"><!--   edge-path [red]  x=125.5 y=330.5 x=125.5 y=205.5  --></transition>
+   </state>
+   <state id="greensoon"><!--   node-size-and-position x=20 y=168 w=75 h=75  -->
+    <onentry>
+     <send delay="1s" event="tick"></send>
+     <script>green_soon()</script>
+    </onentry>
+    <transition event="tick" target="green"></transition>
+   </state>
+   <state id="red"><!--   node-size-and-position x=54 y=43 w=75 h=75  -->
+    <onentry>
+     <send delay="5s" event="tick"></send>
+     <script>red()</script>
+    </onentry>
+    <transition event="tick" target="greensoon"></transition>
+   </state>
+  </state>
+ </parallel>
+ <state id="turn_off"><!--   node-size-and-position x=209.99 y=830 w=75 h=75  -->
+  <onentry>
+   <script>
+
+all_off()
+   </script>
+  </onentry>
+  <transition event="resume" target="H*"><!--   edge-path [H*]  pointx=0 pointy=-19 offsetx=0 offsety=1  --></transition>
+ </state>
+ <state id="flash" initial="yellow_on"><!--   node-size-and-position x=589.99 y=220 w=115 h=263  -->
+  <transition event="resume" target="H*"><!--   edge-path [H*]  pointx=0 pointy=24 offsetx=-29 offsety=29  --></transition>
+  <state id="yellow_on"><!--   node-size-and-position x=20 y=43 w=75 h=75  -->
+   <onentry>
+    <send delay="1s" event="flash"></send>
+    <script>yellow()</script>
+   </onentry>
+   <transition event="flash" target="yellow_off"><!--   edge-path [yellow_off]  x=74 y=143  --></transition>
+  </state>
+  <state id="yellow_off"><!--   node-size-and-position x=20 y=168 w=75 h=75  -->
+   <onentry>
+    <send delay="1s" event="flash"></send>
+    <script>all_off()</script>
+   </onentry>
+   <transition event="flash" target="yellow_on"><!--   edge-path [yellow_on]  x=54 y=143  --></transition>
+  </state>
+ </state>
+</scxml>
