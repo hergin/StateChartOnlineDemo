@@ -6,7 +6,7 @@
             <send event="tick" delay="1s"/>
         </onentry>
         <transition event="tick" target="on">
-            <script>toggleBulb()</script>
+            <script>parent.toggleBulb()</script>
         </transition>
     </state>
     <state id="on">
@@ -14,7 +14,7 @@
             <send event="tick" delay="1s"/>
         </onentry>
         <transition event="tick" target="off">
-            <script>toggleBulb()</script>
+            <script>parent.toggleBulb()</script>
         </transition>
     </state>
 </scxml>

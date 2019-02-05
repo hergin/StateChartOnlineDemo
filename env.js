@@ -1,17 +1,15 @@
 $(document).ready(function(){
-    var scion = require('scion');
+    //var scion = require('scion');
 
     var scxmlContent = $('#scxmlContent'),
         scxmlLoadInitControls = $('#scxmlLoadInitControls'),
         loadFromFile = $('#loadFromFile'),
+        killAllStatecharts = $('#killAllStatecharts'),
         loadScxmlFromField = $('#loadScxmlFromField'),
         initScxmlButton = $('#initScxmlButton'),
         scxmlTrace = $('#scxmlTrace'),
         scxmlSimulationControls = $('#scxmlSimulationControls'),
-        eventNameField = $('#eventNameField'),
-        logOnentryCheckbox = $('#logOnentry')[0],
-        logOnexitCheckbox = $('#logOnexit')[0];
-
+        eventNameField = $('#eventNameField');
 
     var codeMirror = CodeMirror.fromTextArea(scxmlContent[0], window.location.search.match(/keyMap=vim/) ? {keyMap:'vim'} : undefined);
 
@@ -19,7 +17,7 @@ $(document).ready(function(){
 '    <state id="start"><!--   node-size-and-position x=81.36 y=43 w=75 h=75  -->\n'+
 '     <onentry>\n'+
 '      <send delay="1s" event="tick"></send>\n'+
-'      <script>all_off()</script>\n'+
+'      <script>parent.all_off()</script>\n'+
 '     </onentry>\n'+
 '     <transition event="tick" target="lights"><!--   edge-path [lights]  pointx=0 pointy=0 offsetx=-84 offsety=0  --></transition>\n'+
 '    </state>\n'+
@@ -30,28 +28,28 @@ $(document).ready(function(){
 '      <state id="green"><!--   node-size-and-position x=20 y=293 w=75 h=75  -->\n'+
 '       <onentry>\n'+
 '        <send delay="5s" event="tick"></send>\n'+
-'        <script>green()</script>\n'+
+'        <script>parent.green()</script>\n'+
 '       </onentry>\n'+
 '       <transition event="tick" target="yellow"></transition>\n'+
 '      </state>\n'+
 '      <state id="yellow"><!--   node-size-and-position x=54 y=418 w=75 h=75  -->\n'+
 '       <onentry>\n'+
 '        <send delay="1s" event="tick"></send>\n'+
-'        <script>yellow()</script>\n'+
+'        <script>parent.yellow()</script>\n'+
 '       </onentry>\n'+
 '       <transition event="tick" target="red"><!--   edge-path [red]  x=125.5 y=330.5 x=125.5 y=205.5  --></transition>\n'+
 '      </state>\n'+
 '      <state id="greensoon"><!--   node-size-and-position x=20 y=168 w=75 h=75  -->\n'+
 '       <onentry>\n'+
 '        <send delay="1s" event="tick"></send>\n'+
-'        <script>green_soon()</script>\n'+
+'        <script>parent.green_soon()</script>\n'+
 '       </onentry>\n'+
 '       <transition event="tick" target="green"></transition>\n'+
 '      </state>\n'+
 '      <state id="red"><!--   node-size-and-position x=54 y=43 w=75 h=75  -->\n'+
 '       <onentry>\n'+
 '        <send delay="5s" event="tick"></send>\n'+
-'        <script>red()</script>\n'+
+'        <script>parent.red()</script>\n'+
 '       </onentry>\n'+
 '       <transition event="tick" target="greensoon"></transition>\n'+
 '      </state>\n'+
@@ -61,21 +59,12 @@ $(document).ready(function(){
 '     <onentry>\n'+
 '      <script>\n'+
 '   \n'+
-'   all_off()\n'+
+'   parent.all_off()\n'+
 '      </script>\n'+
 '     </onentry>\n'+
 '     <transition event="resume" target="H*"></transition>\n'+
 '    </state>\n'+
 '   </scxml>');
-
-    var listener = {
-        onEntry : function(stateId){
-            if(logOnentryCheckbox.checked) trace('entering ' + stateId);
-        },
-        onExit : function(stateId){
-            if(logOnexitCheckbox.checked) trace('exiting ' + stateId);
-        }
-    };
 
     //add behaviour
     scxmlLoadInitControls.submit(function(e){
@@ -86,6 +75,13 @@ $(document).ready(function(){
         $.get(pathToScxml,function(scxmlText){
             codeMirror.setValue(scxmlText);
         },"text");
+    });
+
+    killAllStatecharts.click(function(){
+        $('iframe').remove();
+        all_off();
+        turnOffBulb();
+        $('#availableTransitions').html("");
     });
 
     loadFromFile.change(function(event) {
@@ -103,31 +99,46 @@ $(document).ready(function(){
 
     initScxmlButton.click(function(){
         //read the content and load it up
-        scion.documentStringToModel(codeMirror.getValue(),function(err,model){
-            if(err){ 
-                alert(err.message);
-                throw err;
-            }
+        scion.scxml.documentStringToModel(null,codeMirror.getValue(),function(err,model){
+            if(err) throw err;
 
             //clean up othe rinstance, if it exists
-            if(scxmlInstance){
-                scxmlInstance.unregisterListener(listener);
-            } 
+            //if(scxmlInstance){
+            //    scxmlInstance.unregisterListener(listener);
+            //} 
 
-            scxmlInstance = new scion.SCXML(model);
-            scxmlInstance.registerListener(listener); 
+            model.prepare(function(err, fnModel) {
+                        
+                if(err) throw err;
 
-            var conf = scxmlInstance.start();
-            
-            trace('started new scxml instance >> ' + JSON.stringify(conf));
+                scxmlInstance = new scion.scxml.core.Statechart(fnModel);
+                // scxmlInstance.registerListener(listener); 
+     
+                 var conf = scxmlInstance.start();
+                 
+                // trace('started new scxml instance >> ' + JSON.stringify(conf));
+     
+                 $('#availableTransitions').html("");
+                 var availableTransitions=[];
+                 $.each(scxmlInstance._model.descendants,function(i1, item){
+                    $.each(item.transitions,function(i2, transition){
+                        $.each(transition.events,function(i3, event) {
+                            availableTransitions.push(event);
+                        });
+                    });
+                 });
 
-            $('#availableTransitions').html("");
-            var availableTransitions="";
-            $.each(scxmlInstance.model.events,function(item){
-                availableTransitions+="<a href='#' onclick='trace(\"triggered event: ["+item+"] resulting state: [\"+scxmlInstance.gen(\""+item+"\")+\"]\")'>"+item+"</a> ";
+                 availableTransitionsHTML = "";
+
+                 availableTransitions = [...new Set(availableTransitions)];
+
+                 $.each(availableTransitions,function(i3,transition) {
+                    availableTransitionsHTML+="<a href='#' onclick='trace(\"triggered event: ["+transition+"] resulting state: [\"+scxmlInstance.gen(\""+transition+"\")+\"]\")'>"+transition+"</a> ";
+                 });
+                 
+                 $('#availableTransitions').html(availableTransitionsHTML);
+
             });
-
-            $('#availableTransitions').html(availableTransitions);
         });
     });
 

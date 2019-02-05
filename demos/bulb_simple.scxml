@@ -1,0 +1,21 @@
+<scxml initial="turned_on" version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=648 h=579  -->
+ <state id="turned_on"><!--   node-size-and-position x=192 y=214 w=75 h=75  -->
+  <onentry>
+   <script>
+
+parent.toggleBulb();
+   </script>
+  </onentry>
+  <transition event="off" target="turned_off"><!--   edge-path [turned_off]  x=290 y=310 pointx=0 pointy=-39 offsetx=0 offsety=0  --></transition>
+ </state>
+ <state id="turned_off"><!--   node-size-and-position x=240 y=368 w=75 h=75  -->
+  <onentry>
+   <script>
+
+parent.toggleBulb();
+   </script>
+  </onentry>
+  <transition event="on" target="turned_on"><!--   edge-path [turned_on]  x=180 y=350  --></transition>
+  <transition event="off" target="turned_on"></transition>
+ </state>
+</scxml>

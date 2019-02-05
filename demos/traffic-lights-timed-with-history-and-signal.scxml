@@ -2,7 +2,7 @@
  <state id="start"><!--   node-size-and-position x=192.99 y=43 w=75 h=75  -->
   <onentry>
    <send delay="1s" event="tick"></send>
-   <script>all_off()</script>
+   <script>parent.all_off()</script>
   </onentry>
   <transition event="tick" target="new_node26"><!--   edge-path [new_node26]  pointx=0 pointy=0 offsetx=0 offsety=-4  --></transition>
  </state>
@@ -14,28 +14,28 @@
    <state id="green"><!--   node-size-and-position x=20 y=293 w=75 h=75  -->
     <onentry>
      <send delay="5s" event="tick"></send>
-     <script>green()</script>
+     <script>parent.green()</script>
     </onentry>
     <transition event="tick" target="yellow"></transition>
    </state>
    <state id="yellow"><!--   node-size-and-position x=54 y=418 w=75 h=75  -->
     <onentry>
      <send delay="1s" event="tick"></send>
-     <script>yellow()</script>
+     <script>parent.yellow()</script>
     </onentry>
     <transition event="tick" target="red"><!--   edge-path [red]  x=125.5 y=330.5 x=125.5 y=205.5  --></transition>
    </state>
    <state id="greensoon"><!--   node-size-and-position x=20 y=168 w=75 h=75  -->
     <onentry>
      <send delay="1s" event="tick"></send>
-     <script>green_soon()</script>
+     <script>parent.green_soon()</script>
     </onentry>
     <transition event="tick" target="green"></transition>
    </state>
    <state id="red"><!--   node-size-and-position x=54 y=43 w=75 h=75  -->
     <onentry>
      <send delay="5s" event="tick"></send>
-     <script>red()</script>
+     <script>parent.red()</script>
     </onentry>
     <transition event="tick" target="greensoon"></transition>
    </state>
@@ -45,7 +45,7 @@
   <onentry>
    <script>
 
-all_off()
+parent.all_off()
    </script>
   </onentry>
   <transition event="resume" target="H*"><!--   edge-path [H*]  pointx=0 pointy=-19 offsetx=0 offsety=1  --></transition>
@@ -55,14 +55,14 @@ all_off()
   <state id="yellow_on"><!--   node-size-and-position x=20 y=43 w=75 h=75  -->
    <onentry>
     <send delay="1s" event="flash"></send>
-    <script>yellow()</script>
+    <script>parent.yellow()</script>
    </onentry>
    <transition event="flash" target="yellow_off"><!--   edge-path [yellow_off]  x=74 y=143  --></transition>
   </state>
   <state id="yellow_off"><!--   node-size-and-position x=20 y=168 w=75 h=75  -->
    <onentry>
     <send delay="1s" event="flash"></send>
-    <script>all_off()</script>
+    <script>parent.all_off()</script>
    </onentry>
    <transition event="flash" target="yellow_on"><!--   edge-path [yellow_on]  x=54 y=143  --></transition>
   </state>

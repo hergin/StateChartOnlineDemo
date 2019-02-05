@@ -3,12 +3,12 @@
        version="1.0" initial="off">
     <state id="off">
         <transition event="on" target="on">
-            <script>toggleBulb()</script>
+            <script>parent.toggleBulb()</script>
         </transition>
     </state>
     <state id="on">
         <transition event="off" target="off">
-            <script>toggleBulb()</script>
+            <script>parent.toggleBulb()</script>
         </transition>
     </state>
 </scxml>
