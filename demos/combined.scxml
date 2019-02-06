@@ -1,0 +1,52 @@
+<scxml version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=1652 h=1035  -->
+ <parallel id="Combined"><!--   node-size-and-position x=120 y=120 w=1170 h=670  -->
+  <state id="LightBulb" initial="off"><!--   node-size-and-position x=80 y=80 w=310 h=340  -->
+   <state id="on"><!--   node-size-and-position x=120 y=230 w=75 h=75  -->
+    <onentry>
+     <send delay="1s" event="tick"></send>
+    </onentry>
+    <transition event="tick" target="off">
+     <script>parent.toggleBulb()</script>
+<!--   edge-path [off]  x=80 y=170  --></transition>
+   </state>
+   <state id="off"><!--   node-size-and-position x=120 y=50 w=75 h=75  -->
+    <onentry>
+     <send delay="1s" event="tick"></send>
+    </onentry>
+    <transition event="tick" target="on">
+     <script>parent.toggleBulb()</script>
+<!--   edge-path [on]  x=250 y=170  --></transition>
+   </state>
+  </state>
+  <state id="TrafficLights" initial="red"><!--   node-size-and-position x=550 y=80 w=440 h=540  -->
+   <state id="red"><!--   node-size-and-position x=170 y=90 w=75 h=75  -->
+    <onentry>
+     <script>parent.red()</script>
+     <send delay="5s" event="green_soon"></send>
+    </onentry>
+    <transition event="green_soon" target="green_soon"></transition>
+   </state>
+   <state id="green_soon"><!--   node-size-and-position x=170 y=220 w=75 h=75  -->
+    <onentry>
+     <script>parent.green_soon()</script>
+     <send delay="1s" event="green"></send>
+    </onentry>
+    <transition event="green" target="green"></transition>
+   </state>
+   <state id="green"><!--   node-size-and-position x=170 y=340 w=75 h=75  -->
+    <onentry>
+     <script>parent.green()</script>
+     <send delay="5s" event="yellow"></send>
+    </onentry>
+    <transition event="yellow" target="yellow"></transition>
+   </state>
+   <state id="yellow"><!--   node-size-and-position x=30 y=220 w=75 h=75  -->
+    <onentry>
+     <script>parent.yellow()</script>
+     <send delay="1s" event="red"></send>
+    </onentry>
+    <transition event="red" target="red"></transition>
+   </state>
+  </state>
+ </parallel>
+</scxml>

@@ -30,3 +30,8 @@ div#right {
     
     width:50%;
 }
+
+.apiLink {
+    cursor: pointer;
+    color: blue;
+}

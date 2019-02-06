@@ -95,7 +95,7 @@ $(document).ready(function(){
                  availableTransitions = [...new Set(availableTransitions)];
 
                  $.each(availableTransitions,function(i3,transition) {
-                    availableTransitionsHTML+="<a href='#' onclick='trace(\"triggered event: ["+transition+"] resulting state: [\"+scxmlInstance.gen(\""+transition+"\")+\"]\")'>"+transition+"</a> ";
+                    availableTransitionsHTML+="<span class='apiLink' onclick='trace(\"triggered event: ["+transition+"] resulting state: [\"+scxmlInstance.gen(\""+transition+"\")+\"]\")'>"+transition+"</span> ";
                  });
                  
                  $('#availableTransitions').html(availableTransitionsHTML);
