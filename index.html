@@ -48,18 +48,23 @@
 
         function green() {
             document.getElementById("trafficLightsImage").src = "pics/green.png";
+            document.getElementById("trafficLightsImageV2").src = "pics/green_v2.png";
         }
         function red() {
             document.getElementById("trafficLightsImage").src = "pics/red.png";
+            document.getElementById("trafficLightsImageV2").src = "pics/red_v2.png";
         }
         function yellow() {
             document.getElementById("trafficLightsImage").src = "pics/yellow.png";
+            document.getElementById("trafficLightsImageV2").src = "pics/yellow_v2.png";
         }
         function green_soon() {
             document.getElementById("trafficLightsImage").src = "pics/greensoon.png";
+            document.getElementById("trafficLightsImageV2").src = "pics/greensoon_v2.png";
         }
         function all_off() {
             document.getElementById("trafficLightsImage").src = "pics/all_off.png";
+            document.getElementById("trafficLightsImageV2").src = "pics/all_off_v2.png";
         }
 
         function loadExternalXML(xmlFile) {
@@ -164,14 +169,17 @@
             </div>
             <hr/>
             <div class="row" id="trafficLightsExample">
-                    <div class="col text-center">
+                    <div class="col-sm-12 text-center">
                             <h3>Traffic Lights example</h3>
                     </div>
                 </div>
             <div class="row" id="trafficLightsExample">
-                <div class="col text-right">
-                    <img id="trafficLightsImage" src="pics/all_off.png" width="80"/>
+                <div class="col text-right" id="theme1">
+                    <img id="trafficLightsImage" src="pics/all_off.png" height="250"/>
                 </div>
+                <div class="col text-right" id="theme2" style="display:none">
+                        <img id="trafficLightsImageV2" src="pics/all_off_v2.png" height="250"/>
+                    </div>
                 <div class="col text-left">
                     <br/>
                     <br/>
@@ -183,6 +191,11 @@
                         <span class="apiLink" onclick="javascript:green_soon()">green_soon();</span><br/>
                         <span class="apiLink" onclick="javascript:all_off()">all_off();</span><br/>
                     </code>
+                </div>
+            </div>
+            <div class="row" id="trafficLightsExample">
+                <div class="col text-center">
+                        <h5 class="apiLink" onclick="$('#theme1').toggle();$('#theme2').toggle();">Change theme</h5>
                 </div>
             </div>
             <hr/>
